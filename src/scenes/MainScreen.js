@@ -18,7 +18,7 @@ const MainScreen = ({ navigation }) => {
 
   const [state, setState] = useState({
     search: '',
-    selected_cat: DEFAULT_CATEGORY
+    selected_cat: ''
   })
 
   const handleChange = (value, name) => {
@@ -26,7 +26,7 @@ const MainScreen = ({ navigation }) => {
   }
 
   useEffect(() => {
-    dispatch(getHeadlinesRequest(DEFAULT_COUNTRY, DEFAULT_CATEGORY, state.search))
+    dispatch(getHeadlinesRequest(DEFAULT_COUNTRY, state.selected_cat == '' ? DEFAULT_CATEGORY : state.selected_cat, state.search))
   }, [state.search, state.selected_cat])
 
   const filterCat = (cat_name) => {
@@ -34,7 +34,6 @@ const MainScreen = ({ navigation }) => {
       ...prevState,
       'selected_cat': prevState.selected_cat == cat_name ? '' : cat_name
     }))
-    dispatch(getHeadlinesRequest(DEFAULT_COUNTRY, cat_name, state.search))
   }
 
   const renderCategory = ({ item }) => {
